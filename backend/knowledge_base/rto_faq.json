@@ -1,0 +1,102 @@
+[
+  {
+    "id": "faq_001",
+    "question": "What documents are required for driving license test?",
+    "answer": "You need your Learner’s License, Aadhaar card, proof of residence, passport-sized photos, and test fee receipt."
+  },
+  {
+    "id": "faq_002",
+    "question": "How can I book an appointment for a driving license test?",
+    "answer": "Appointments for driving license tests can be booked only through the official RTO Queue Management System website you created."
+  },
+  {
+    "id": "faq_003",
+    "question": "How can I reschedule my RTO appointment?",
+    "answer": "Rescheduling of RTO appointments must be done through your RTO Queue Management System website."
+  },
+  {
+    "id": "faq_004",
+    "question": "Can I cancel my RTO appointment?",
+    "answer": "Yes, cancellations are possible via your RTO Queue Management System website."
+  },
+  {
+    "id": "faq_005",
+    "question": "What are the working hours of RTO offices?",
+    "answer": "Most RTO offices function from 10:00 AM to 5:00 PM, Monday to Saturday, excluding public holidays."
+  },
+  {
+    "id": "faq_006",
+    "question": "What is a Learner’s License (LL)?",
+    "answer": "A Learner’s License is a temporary license issued to learn driving. It is valid for 6 months and allows you to practice driving under supervision."
+  },
+  {
+    "id": "faq_007",
+    "question": "What documents are needed to apply for a Learner’s License?",
+    "answer": "You need proof of age, proof of residence, Aadhaar card, passport-sized photographs, and application fees."
+  },
+  {
+    "id": "faq_008",
+    "question": "What is the minimum age for obtaining a Learner’s License for motorcycles?",
+    "answer": "The minimum age is 16 years with parental consent for motorcycles up to 50cc. For higher capacity motorcycles, the minimum age is 18 years."
+  },
+  {
+    "id": "faq_009",
+    "question": "What is the minimum age for obtaining a driving license for cars?",
+    "answer": "The applicant must be at least 18 years old to obtain a permanent driving license for LMV (Light Motor Vehicles)."
+  },
+  {
+    "id": "faq_010",
+    "question": "What is the validity of a Learner’s License?",
+    "answer": "A Learner’s License is valid for 6 months from the date of issue."
+  },
+  {
+    "id": "faq_011",
+    "question": "When can I apply for a Driving License after getting a Learner’s License?",
+    "answer": "You can apply for a Driving License 30 days after obtaining a Learner’s License."
+  },
+  {
+    "id": "faq_012",
+    "question": "What is the fee for a Learner’s License?",
+    "answer": "The fee varies by state, but it is generally between ₹150 and ₹200."
+  },
+  {
+    "id": "faq_013",
+    "question": "What is the validity of a permanent driving license?",
+    "answer": "A permanent driving license is valid for 20 years or until the holder turns 50 years old, whichever comes first."
+  },
+  {
+    "id": "faq_014",
+    "question": "What documents are required for renewal of a driving license?",
+    "answer": "You need your expired driving license, Form 9 (application for renewal), medical certificate if over 50 years old, and the prescribed fee."
+  },
+  {
+    "id": "faq_015",
+    "question": "How can I renew my driving license?",
+    "answer": "You can apply for renewal at your RTO office or through the RTO Queue Management System website."
+  },
+  {
+    "id": "faq_016",
+    "question": "What is the fee for renewal of a driving license?",
+    "answer": "The renewal fee is usually ₹200 to ₹400, depending on the state."
+  },
+  {
+    "id": "faq_017",
+    "question": "What happens if I don’t renew my license on time?",
+    "answer": "A fine will be imposed if renewal is delayed by more than 30 days. If delayed by over 5 years, you must apply for a new license."
+  },
+  {
+    "id": "faq_018",
+    "question": "How can I get a duplicate driving license if I lost mine?",
+    "answer": "Apply at the RTO with Form LLD, an affidavit of loss, FIR copy (if applicable), and passport-sized photos."
+  },
+  {
+    "id": "faq_019",
+    "question": "Can I change the address on my driving license?",
+    "answer": "Yes, you can apply at your RTO with proof of new address, existing license, and prescribed fees."
+  },
+  {
+    "id": "faq_020",
+    "question": "What is an International Driving Permit (IDP)?",
+    "answer": "An IDP allows you to drive vehicles in foreign countries. It is issued by the RTO based on your valid Indian driving license."
+  }
+]
