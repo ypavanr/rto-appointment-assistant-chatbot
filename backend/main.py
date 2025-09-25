@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from rag_chain import get_rag_chain
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/chat": {"origins": "http://localhost:5173"}})
+
 qa_chain = get_rag_chain()
 
 @app.route("/chat", methods=["POST"])
