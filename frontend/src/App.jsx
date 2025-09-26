@@ -6,6 +6,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_CHAT_API || "http://localhost:3000/chat";
 const BOT = { id: "bot", name: "RTO Assistant" };
 
+// We’re not using ChatUI’s composer, so leave these blank.
 const locale = { composer: { placeholder: "", send: "" } };
 
 export default function App() {
@@ -35,10 +36,11 @@ export default function App() {
     );
   }
 
-  async function handleSend(text) {
-    if (!text.trim()) return;
+  async function sendMessage(text) {
+    const q = (text || "").trim();
+    if (!q) return;
 
-    appendMsg({ type: "text", content: text, position: "right" });
+    appendMsg({ type: "text", content: q, position: "right" });
 
     const typingId = `typing-${Date.now()}`;
     appendMsg({
@@ -50,7 +52,7 @@ export default function App() {
     });
 
     try {
-      const res = await axios.post(API_URL, { query: text }, { timeout: 15000 });
+      const res = await axios.post(API_URL, { query: q }, { timeout: 20000 });
       const answer = res?.data?.answer || "Sorry, I couldn’t find that.";
       updateMsg(typingId, {
         type: "text",
@@ -58,7 +60,7 @@ export default function App() {
         position: "left",
         user: BOT,
       });
-    } catch {
+    } catch (e) {
       updateMsg(typingId, {
         type: "text",
         content: "⚠️ Unable to reach the server. Please try again.",
@@ -96,22 +98,22 @@ export default function App() {
           </a>
         </div>
 
-        {/* Chat body (messages only, no composer) */}
+        {/* Scrollable chat body (messages only) */}
         <div className="chat-body">
           <Chat
-  className="chat-ui"
-  locale={locale}
-  messages={messages}
-  renderMessageContent={renderMessageContent}
-  placeholder=""
-  quickReplies={quickReplies}
-  onQuickReplyClick={(item) => handleSend(item.value)}
-  disableComposer={true}   // 👈 this hides the built-in composer
-/>
-
+            className="chat-ui"
+            locale={locale}
+            messages={messages}
+            renderMessageContent={renderMessageContent}
+            placeholder=""
+            quickReplies={quickReplies}
+            onQuickReplyClick={(item) => sendMessage(item.value)}
+            // 🔒 Hard-disable any internal composer rendering
+            renderComposer={() => null}
+          />
         </div>
 
-        {/* Custom composer (separate) */}
+        {/* Our custom prompt bar (the only composer) */}
         <div className="custom-composer">
           <input
             className="composer-input"
@@ -119,14 +121,17 @@ export default function App() {
             placeholder="Type your question…"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === "Enter" && (handleSend(inputValue), setInputValue(""))
-            }
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                sendMessage(inputValue);
+                setInputValue("");
+              }
+            }}
           />
           <button
             className="composer-btn"
             onClick={() => {
-              handleSend(inputValue);
+              sendMessage(inputValue);
               setInputValue("");
             }}
           >

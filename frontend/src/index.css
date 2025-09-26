@@ -1,9 +1,7 @@
-html, body, #root {
-  height: 100%;
-  margin: 0;
-}
+html, body, #root { height: 100%; margin: 0; }
 * { box-sizing: border-box; }
 
+/* Background */
 .chat-root {
   min-height: 100vh;
   background:
@@ -14,6 +12,7 @@ html, body, #root {
   padding: 24px;
 }
 
+/* Card shell */
 .chat-card {
   width: 100%;
   max-width: 640px;
@@ -47,22 +46,42 @@ html, body, #root {
   border-radius: 9999px; background: #eff6ff; border: 1px solid #dbeafe; text-decoration: none;
 }
 
-/* Chat body (scrollable messages only) */
+/* Body section (messages only, scrolls) */
 .chat-body {
   flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ChatUI container */
+.chat-ui {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
-.chat-ui {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+/* 🔥 Force-hide ANY built-in ChatUI composer just in case */
+.chat-ui .Composer,
+.chat-ui [class^="Composer"],
+.chat-ui [class*=" Composer"],
+.chat-ui .SendBtn,
+.chat-ui .Operations,
+.chat-ui .ActionBar {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
 }
 
-/* Custom composer */
+/* Bubbles & inputs */
+.chat-ui .Message.left .Bubble { background: #f1f5f9; }
+.chat-ui .Message.right .Bubble { background: #2563eb; color: #fff; }
+
+/* Custom composer (outside ChatUI) */
 .custom-composer {
   display: flex;
   align-items: center;
@@ -86,22 +105,20 @@ html, body, #root {
   padding: 10px 16px;
   cursor: pointer;
 }
-.composer-btn:hover {
-  background: #1d4ed8;
-}
+.composer-btn:hover { background: #1d4ed8; }
 
 /* Footer */
 .chat-footer {
   font-size: 12px; color: #94a3b8; text-align: center;
-  padding: 8px 12px;
-  border-top: 1px solid rgba(2,6,23,.06);
-  background: #fafafa;
+  padding: 8px 12px; border-top: 1px solid rgba(2,6,23,.06); background: #fafafa;
 }
-
-/* Bubble styles */
-.chat-ui .Message.left .Bubble { background: #f1f5f9; }
-.chat-ui .Message.right .Bubble { background: #2563eb; color: #fff; }
-/* Completely hide ChatUI's built-in composer */
-.chat-ui .Composer {
+/* 🚨 Force remove ChatUI's built-in Composer bar */
+div.Composer {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
 }
