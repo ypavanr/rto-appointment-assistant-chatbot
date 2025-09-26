@@ -6,7 +6,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_CHAT_API || "http://localhost:3000/chat";
 const BOT = { id: "bot", name: "RTO Assistant" };
 
-// ✅ Minimal English locale override (no external import needed)
+// ✅ Minimal English locale override
 const locale = {
   composer: {
     placeholder: "Type your question…",
@@ -16,7 +16,7 @@ const locale = {
 
 export default function App() {
   const { messages, appendMsg, updateMsg } = useMessages([]);
-  const welcomedOnce = useRef(false); // prevents double welcome in React strict mode
+  const welcomedOnce = useRef(false);
 
   useEffect(() => {
     if (!welcomedOnce.current) {
@@ -48,12 +48,23 @@ export default function App() {
     appendMsg({ type: "text", content: text, position: "right" });
 
     const typingId = `typing-${Date.now()}`;
-    appendMsg({ _id: typingId, type: "text", content: "…", position: "left", user: BOT });
+    appendMsg({
+      _id: typingId,
+      type: "text",
+      content: "…",
+      position: "left",
+      user: BOT,
+    });
 
     try {
       const res = await axios.post(API_URL, { query: text }, { timeout: 15000 });
       const answer = res?.data?.answer || "Sorry, I couldn’t find that.";
-      updateMsg(typingId, { type: "text", content: answer, position: "left", user: BOT });
+      updateMsg(typingId, {
+        type: "text",
+        content: answer,
+        position: "left",
+        user: BOT,
+      });
     } catch {
       updateMsg(typingId, {
         type: "text",
@@ -81,7 +92,9 @@ export default function App() {
             <div className="chat-avatar">🚦</div>
             <div>
               <div className="chat-title">RTO Appointment Assistant</div>
-              <div className="chat-status"><span className="dot" /> Online</div>
+              <div className="chat-status">
+                <span className="dot" /> Online
+              </div>
             </div>
           </div>
           <a className="chat-help" href="#" onClick={(e) => e.preventDefault()}>
@@ -91,8 +104,8 @@ export default function App() {
 
         <Chat
           className="chat-ui"
-          style={{ height: '100%' }}
-          locale={locale}               // 👈 send button now shows “Send”
+          style={{ height: "100%" }}
+          locale={locale}
           messages={messages}
           renderMessageContent={renderMessageContent}
           onSend={handleSend}
