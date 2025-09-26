@@ -1,42 +1,125 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Full-page soft gradient */
+.rto-chat-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, #eef2ff 0%, transparent 60%),
+    linear-gradient(180deg, #fafafa 0%, #f1f5f9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Card container */
+.rto-chat-card {
+  width: 100%;
+  max-width: 560px;
+  height: min(80vh, 760px);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(2, 6, 23, 0.12);
+  overflow: hidden;
+  border: 1px solid rgba(2, 6, 23, 0.06);
+}
+
+/* Header */
+.rto-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, #ffffff, #fbfbfb);
+  border-bottom: 1px solid rgba(2, 6, 23, 0.06);
+}
+.rto-chat-header .avatar {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eef2ff;
+  font-size: 18px;
+}
+.rto-chat-header .meta {
+  flex: 1;
+}
+.rto-chat-header .title {
+  font-weight: 600;
+  font-size: 16px;
+}
+.rto-chat-header .status {
+  font-size: 12px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rto-chat-header .status .dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+}
+.rto-chat-header .help {
+  font-size: 12px;
+  color: #2563eb;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+/* Make ChatUI fill remaining space */
+.rto-chat {
+  flex: 1;
+}
+
+/* Footer */
+.rto-chat-footer {
+  font-size: 12px;
+  color: #94a3b8;
   text-align: center;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(2, 6, 23, 0.06);
+  background: #fafafa;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* ChatUI overrides (scoped to this card) */
+.rto-chat .Composer {
+  border-top: 1px solid rgba(2, 6, 23, 0.06);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.rto-chat .Composer-input {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 10px 12px;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.rto-chat .SendBtn {
+  color: #2563eb;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.rto-chat .Message.left .Bubble {
+  background: #f1f5f9;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.rto-chat .Message.right .Bubble {
+  background: #2563eb;
+  color: #ffffff;
 }
-
-.card {
-  padding: 2em;
+.rto-chat .QuickReplies {
+  padding: 6px 10px;
+  border-top: 1px solid rgba(2, 6, 23, 0.06);
+  background: #fafafa;
 }
-
-.read-the-docs {
-  color: #888;
+.rto-chat .QuickReply {
+  background: #eef2ff;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  color: #334155;
+}
+.rto-chat .QuickReply--highlight {
+  background: #2563eb;
+  border-color: #1d4ed8;
+  color: #ffffff;
 }

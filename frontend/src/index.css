@@ -1,68 +1,142 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* make the app actually fill the screen */
+html, body, #root { height: 100%; margin: 0; }
+* { box-sizing: border-box; }
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+/* soft background */
+.chat-root {
   min-height: 100vh;
+  background:
+    radial-gradient(1000px 700px at 20% 0%, #eef2ff 0%, transparent 60%),
+    linear-gradient(180deg, #fafafa 0%, #f1f5f9 100%);
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* the card */
+.chat-card {
+  width: 100%;
+  max-width: 640px;
+  height: min(84vh, 780px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(2,6,23,.06);
+  box-shadow: 0 20px 60px rgba(2,6,23,.12);
+  overflow: hidden;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* header */
+.chat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(180deg,#fff,#fbfbfb);
+  border-bottom: 1px solid rgba(2,6,23,.06);
 }
-button:hover {
-  border-color: #646cff;
+.chat-brand { display: flex; align-items: center; gap: 12px; }
+.chat-avatar {
+  width: 36px; height: 36px; display: grid; place-items: center;
+  border-radius: 50%; background: #eef2ff; font-size: 18px;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.chat-title { font-weight: 600; font-size: 16px; }
+.chat-status { font-size: 12px; color: #64748b; display: flex; gap: 6px; align-items: center; }
+.chat-status .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 0 3px rgba(34,197,94,.15); }
+.chat-help {
+  font-size: 12px; color: #2563eb; padding: 6px 10px;
+  border-radius: 9999px; background: #eff6ff; border: 1px solid #dbeafe; text-decoration: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* chat body must grow */
+.chat-ui { flex: 1; }
+
+/* footer */
+.chat-footer {
+  font-size: 12px; color: #94a3b8; text-align: center;
+  padding: 8px 12px; border-top: 1px solid rgba(2,6,23,.06); background: #fafafa;
 }
+
+/* tasteful overrides for ChatUI */
+.chat-ui .Composer-input { background: #f8fafc; border-radius: 10px; padding: 10px 12px; }
+.chat-ui .SendBtn { color: #2563eb; }
+.chat-ui .Message.left .Bubble { background: #f1f5f9; }
+.chat-ui .Message.right .Bubble { background: #2563eb; color: #fff; }
+.chat-ui .QuickReplies { padding: 6px 10px; border-top: 1px solid rgba(2,6,23,.06); background: #fafafa; }
+.chat-ui .QuickReply { background: #eef2ff; border: 1px solid #e2e8f0; border-radius: 9999px; color: #334155; }
+.chat-ui .QuickReply--highlight { background: #2563eb; border-color: #1d4ed8; color: #fff; }
+/* Ensure Chat takes full height of the card */
+.chat-ui {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Keep the message list flexible so the Composer always fits */
+.chat-ui .MessageList,
+.chat-ui .Messages,
+.chat-ui .Main {
+  flex: 1 1 auto;
+  min-height: 0;            /* important with flex to avoid pushing Composer out */
+}
+
+/* Fix: QuickReplies should not overlap Composer */
+.chat-ui .QuickReplies {
+  position: static !important;   /* disable sticky */
+  bottom: auto !important;
+  z-index: auto !important;
+}
+
+/* Pin the Composer to the bottom and give it a solid bg */
+.chat-ui .Composer {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  z-index: 1;
+}
+/* --- Make the chat layout robust --- */
+.chat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat container fills card vertically */
+.chat-ui {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; /* critical for flex children to shrink */
+}
+
+/* Make only the message area scrollable */
+.chat-ui .Main {
+  flex: 1 1 auto;
+  min-height: 0;         /* prevents Composer from being pushed out */
+  overflow: auto;        /* scroll here */
+}
+
+/* Optional: ensure inner list doesn't impose its own height */
+.chat-ui .Messages,
+.chat-ui .MessageList {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Quick replies should sit ABOVE the composer, not sticky */
+.chat-ui .QuickReplies {
+  position: static !important;
+  bottom: auto !important;
+  z-index: auto !important;
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-top: 1px solid rgba(2,6,23,.06);
+  background: #fafafa;
+}
+
+/* Composer should be in normal flow at the bottom */
+.chat-ui .Composer {
+  position: static !important;   /* remove sticky */
+  flex: 0 0 auto;
+  background: #fff;
+  border-top: 1px solid rgba(2,6,23,.06);
+}
+.chat-card { height: 90dvh; max-height: 780px; }
