@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Chat, { Bubble, useMessages } from "@chatui/core";
 import "@chatui/core/dist/index.css";
 import axios from "axios";
@@ -6,17 +6,12 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_CHAT_API || "http://localhost:3000/chat";
 const BOT = { id: "bot", name: "RTO Assistant" };
 
-// ✅ Minimal English locale override
-const locale = {
-  composer: {
-    placeholder: "Type your question…",
-    send: "Send",
-  },
-};
+const locale = { composer: { placeholder: "", send: "" } };
 
 export default function App() {
   const { messages, appendMsg, updateMsg } = useMessages([]);
   const welcomedOnce = useRef(false);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     if (!welcomedOnce.current) {
@@ -40,10 +35,8 @@ export default function App() {
     );
   }
 
-  async function handleSend(type, val) {
-    if (type !== "text") return;
-    const text = String(val || "").trim();
-    if (!text) return;
+  async function handleSend(text) {
+    if (!text.trim()) return;
 
     appendMsg({ type: "text", content: text, position: "right" });
 
@@ -87,6 +80,7 @@ export default function App() {
   return (
     <div className="chat-root">
       <div className="chat-card">
+        {/* Header */}
         <div className="chat-header">
           <div className="chat-brand">
             <div className="chat-avatar">🚦</div>
@@ -102,18 +96,45 @@ export default function App() {
           </a>
         </div>
 
-        <Chat
-          className="chat-ui"
-          style={{ height: "100%" }}
-          locale={locale}
-          messages={messages}
-          renderMessageContent={renderMessageContent}
-          onSend={handleSend}
-          quickReplies={quickReplies}
-          onQuickReplyClick={(item) => handleSend("text", item.value)}
-          placeholder="Type your question…"
-        />
+        {/* Chat body (messages only, no composer) */}
+        <div className="chat-body">
+          <Chat
+  className="chat-ui"
+  locale={locale}
+  messages={messages}
+  renderMessageContent={renderMessageContent}
+  placeholder=""
+  quickReplies={quickReplies}
+  onQuickReplyClick={(item) => handleSend(item.value)}
+  disableComposer={true}   // 👈 this hides the built-in composer
+/>
 
+        </div>
+
+        {/* Custom composer (separate) */}
+        <div className="custom-composer">
+          <input
+            className="composer-input"
+            type="text"
+            placeholder="Type your question…"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter" && (handleSend(inputValue), setInputValue(""))
+            }
+          />
+          <button
+            className="composer-btn"
+            onClick={() => {
+              handleSend(inputValue);
+              setInputValue("");
+            }}
+          >
+            Send
+          </button>
+        </div>
+
+        {/* Footer */}
         <div className="chat-footer">Powered by RTO Queue System</div>
       </div>
     </div>

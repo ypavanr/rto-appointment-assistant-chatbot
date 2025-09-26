@@ -4,7 +4,6 @@ html, body, #root {
 }
 * { box-sizing: border-box; }
 
-/* soft background */
 .chat-root {
   min-height: 100vh;
   background:
@@ -15,7 +14,6 @@ html, body, #root {
   padding: 24px;
 }
 
-/* the card */
 .chat-card {
   width: 100%;
   max-width: 640px;
@@ -29,7 +27,7 @@ html, body, #root {
   overflow: hidden;
 }
 
-/* header */
+/* Header */
 .chat-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 16px;
@@ -49,46 +47,61 @@ html, body, #root {
   border-radius: 9999px; background: #eff6ff; border: 1px solid #dbeafe; text-decoration: none;
 }
 
-/* chat body grows */
+/* Chat body (scrollable messages only) */
+.chat-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .chat-ui {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
-/* message list scrolls */
-.chat-ui .Main {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  min-height: 0;
-}
-
-/* composer stays at bottom */
-.chat-ui .Composer {
-  flex: 0 0 auto;
+/* Custom composer */
+.custom-composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid rgba(2,6,23,.06);
   background: #fff;
-  border-top: 1px solid rgba(2,6,23,.06);
+}
+.composer-input {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.composer-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+.composer-btn:hover {
+  background: #1d4ed8;
 }
 
-/* quick replies just above composer */
-.chat-ui .QuickReplies {
-  flex: 0 0 auto;
-  background: #fafafa;
-  border-top: 1px solid rgba(2,6,23,.06);
-  padding: 6px 10px;
-}
-
-/* footer */
+/* Footer */
 .chat-footer {
   font-size: 12px; color: #94a3b8; text-align: center;
-  padding: 8px 12px; border-top: 1px solid rgba(2,6,23,.06); background: #fafafa;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(2,6,23,.06);
+  background: #fafafa;
 }
 
-/* bubble styles */
+/* Bubble styles */
 .chat-ui .Message.left .Bubble { background: #f1f5f9; }
 .chat-ui .Message.right .Bubble { background: #2563eb; color: #fff; }
-.chat-ui .Composer-input { background: #f8fafc; border-radius: 10px; padding: 10px 12px; }
-.chat-ui .SendBtn { color: #2563eb; }
-.chat-ui .QuickReply { background: #eef2ff; border: 1px solid #e2e8f0; border-radius: 9999px; color: #334155; }
-.chat-ui .QuickReply--highlight { background: #2563eb; border-color: #1d4ed8; color: #fff; }
+/* Completely hide ChatUI's built-in composer */
+.chat-ui .Composer {
+  display: none !important;
+}
